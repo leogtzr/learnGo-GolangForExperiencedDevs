@@ -30,3 +30,64 @@ Goroutines are great.
 ```bash
 go mod init <project-name>
 ```
+
+### A Hello World
+
+$ tree
+.
+├── cmd
+│   └── tutorial1
+│       └── main.go
+└── go.mod
+
+2 directories, 2 files
+$ cat cmd/tutorial1/main.go
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+Building:
+```bash
+go build cmd/tutorial1/main.go
+```
+
+Running:
+```bash
+./main
+```
+or:
+```bash
+go run cmd/tutorial1/main.go
+```
+
+## Variable Types
+```go
+var intNum int8 // or int16, int32, int64
+```
+```go
+var intNum uint // or uint8, uint16, uint64 
+```
+```go
+var floatNum float64 // or float32
+```
+
+### We cannot perform operations with mixed types
+The following leads to a compile error:
+```go
+var floatNum32 float32 = 10.1
+var intNum int32 = 2
+var result float32 = floatNum32 + intNum
+```
+
+For multiline string variables
+var myName string = `
+Leonardo
+Gutierrez
+Ramirez
+`
