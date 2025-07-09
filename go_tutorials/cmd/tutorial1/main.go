@@ -15,4 +15,7 @@ func main() {
 	Ramirez`
 
 	fmt.Println(myName)
+
+	var myRune rune = 'a'
+	fmt.Println(myRune)
 }

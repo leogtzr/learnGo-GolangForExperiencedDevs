@@ -91,3 +91,15 @@ Leonardo
 Gutierrez
 Ramirez
 `
+
+To handle fancy strings, it is better to use a specialized package such as: _unicode/utf8_, and:
+```go
+fmt.Println(utf8.RuneCountInString("Y"))
+```
+
+## Default values for types
+uint, uint8, uint16, uint32, uint64
+int, int8, int16, int32, int64
+float32, float64
+rune
+is 0 ...
