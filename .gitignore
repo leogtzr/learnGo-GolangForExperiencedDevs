@@ -31,3 +31,5 @@ go.work.sum
 # .idea/
 # .vscode/
 go_tutorials/main
+
+go_tutorials/bin/tutorial1

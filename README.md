@@ -11,7 +11,7 @@ var myVariable = "myString"
 
 ### 2 - Strongly Typed Language
 In Go, we cannot do something like this:
-```Go
+```go
 a = 1
 b = "two"
 c = a + b
@@ -103,3 +103,76 @@ int, int8, int16, int32, int64
 float32, float64
 rune
 is 0 ...
+
+## Ways of declaring a variable
+```go
+name := "Leonardo"
+var name = "Leonardo"
+var name string = "Leonardo"
+```
+
+This is also possible:
+```go
+x1, x2 := 1, 2
+var y1, y2 = 1, 2
+```
+
+## Constants
+They need to be declared and assign a value in the same line.
+```go
+const myName string = "Leonardo"
+```
+
+## Functions
+```go
+func main() {
+    printMe()
+}
+
+func printMe() {
+}
+
+func printMe2(printValue string) {
+}
+```
+
+```go
+func rValue1() int {
+    return 1
+}
+```
+
+Returning multiple values:
+
+```go
+func x() (int, int) {
+    return 1, 1
+}
+```
+
+## Ignoring a returning value
+The _string_ value is ignored.
+```go
+someVal, _ := myFunc()
+fmt.Println(someVal)
+
+func myFunc() (int, string) {
+	return -1, "Leo"
+}
+
+```
+
+## Default value of _error_ 
+The default value of the _error_ type is nil.
+
+## Conditional switch statement
+```go
+switch remainder {
+case 0:
+    fmt.Println("The division was exact")
+case 1, 2:              // 1 or 2
+    fmt.Println("The division was close")
+default:            // anything else
+    fmt.Println("The division was not close")
+}
+```
