@@ -176,3 +176,23 @@ default:            // anything else
     fmt.Println("The division was not close")
 }
 ```
+
+## Arrays
+- Fixed length
+- Same Type
+- Indexable
+- Contiguous in memory
+
+### How to initialize them
+```go
+var intArr [3]int32 = [3]int32{4, 2, 6}
+intArr[1] = 123
+```
+or:
+```go
+intOther := [3]int32{4, 5, 6}
+```
+or inferring the size:
+```go
+intOther := [...]int32{5, 2, 65}
+```
