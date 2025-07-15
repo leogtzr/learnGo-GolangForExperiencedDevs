@@ -196,3 +196,21 @@ or inferring the size:
 ```go
 intOther := [...]int32{5, 2, 65}
 ```
+
+## Slices
+"Slices wrap arrays to give a more general, powerful, and convenient interface to sequence of data."
+
+### Example
+```Go
+var intSlice []int32 = []int32{4, 5, 6}
+fmt.Println(intSlice)
+```
+
+### Adding an element to a slice
+```Go
+intSlice = append(intSlice, 7)
+```
+
+### len(x) and cap(x) methods
+![len and capacity methods explanation](./images/len_cap.png)
+
