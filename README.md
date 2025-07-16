@@ -227,3 +227,39 @@ intSlice = append(intSlice, 7)
 var intSlices3 []int32 = make([]int32, 5)
 fmt.Println(intSlices3)
 ```
+
+## Maps
+- key, value pairs
+- Returns a default value of the value type if the key does not exist.
+
+### Creation
+```go
+dict1 := make(map[string]int)
+```
+
+### Add element and get
+```go
+    dict1 := make(map[string]int)
+	fmt.Println(dict1)
+
+	dict1["leonardo"] = 34
+	fmt.Println(dict1)
+
+	fmt.Println(dict1["leonardo"])
+```
+
+### Literal initialisation
+```go
+var ages = map[string]uint8{"Perla":33, "Leonardo":34}
+```
+
+### Check if an element does not exist
+In the following code, `ok` will contain true or false if the key exists.
+```go
+if mariaAge, ok := ages["maria"]; ok {
+	fmt.Println(mariaAge)
+}
+```
+
+### Remove an element
+`delete(myMap, key)`
