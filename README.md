@@ -214,3 +214,16 @@ intSlice = append(intSlice, 7)
 ### len(x) and cap(x) methods
 ![len and capacity methods explanation](./images/len_cap.png)
 
+### Appending multiple elements using the spread operator
+```Go
+	intSlice2 := []int32{8, 9}
+	intSlice = append(intSlice, intSlice2...)
+
+	fmt.Println(intSlice)
+```
+
+### Creating slices with make()
+```go
+var intSlices3 []int32 = make([]int32, 5)
+fmt.Println(intSlices3)
+```
