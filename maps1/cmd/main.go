@@ -18,4 +18,29 @@ func main() {
 		fmt.Println(mariaAge)
 	}
 
+	ages["maria"] = 55
+
+	for name, age := range ages {
+		fmt.Printf("%s has %d age\n", name, age)
+	}
+
+	var nums [3]int = [3]int{33, 34, 29}
+	for i, v := range nums {
+		fmt.Printf("i(%d) = %d\n", i, v)
+	}
+
+	// -------
+	var i int = 0
+	for {
+		fmt.Println(i)
+		if i > 10 {
+			break
+		}
+		i++
+	}
+
+	fmt.Println("---------")
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+	}
 }

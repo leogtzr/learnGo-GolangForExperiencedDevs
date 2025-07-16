@@ -289,24 +289,3 @@ for i < 10 {
     i++
 }
 ```
-
-```go
-    var i int = 0
-	for {
-        fmt.Println(i)
-		if i > 10 {
-			break
-		}
-		i++
-	}
-}
-```
-
-```go
-for i := 0; i < 10; i++ {
-    fmt.Println(i)
-}
-```
-
-### Basic math ops
-![Basic math operators](./images/basic_math_ops.png)
