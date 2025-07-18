@@ -512,3 +512,22 @@ func canMakeIt(e engine, miles uint8) bool {
 func main() {
 }
 ```
+
+# Pointers
+- Are a special type.
+- They are variables which stores memory locations, rather than values.
+- `var p *int32` the variable `p` will hold the memory address of an `int32` value.
+
+## Example
+```go
+package main
+
+func main() {
+	var p *int32
+	var i int32
+}
+```
+How the variables might look in memory:
+![pointers 1](./images/pointers1.png)
+Assigning with `new(int32)`:
+![pointers 2](./images/pointers2.png)
