@@ -396,12 +396,12 @@ type gasEngine2 struct {
 	gallons uint8
 	owner
 }
+```
 
 We can access the name field inside the `owner` type this way:
 ```go
 ge := gasEngine2{mpg: 4, gallons: 9, owner: owner{name: "Leo"}}
 	fmt.Printf("%+v\n", ge)
 	fmt.Println(ge.name)
-
 ```
 
