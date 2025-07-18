@@ -531,3 +531,65 @@ How the variables might look in memory:
 ![pointers 1](./images/pointers1.png)
 Assigning with `new(int32)`:
 ![pointers 2](./images/pointers2.png)
+
+- Dereference the pointer (get the value we are pointing to): use the `*` operator.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var p *int32 = new(int32) //
+	*p = 2
+
+	fmt.Println(*p)
+}
+```
+We can also the address of another variable:
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var p *int32 = new(int32) //
+	*p = 2
+
+	fmt.Println(*p)
+
+	var x int32 = 89
+	p = &x
+	*p += 1
+
+	fmt.Println(*p)
+	fmt.Println(x)
+}
+```
+Above's code should show 2 90 90.
+
+- Slices under the hood contain pointers to the underlying array:
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var p *int32 = new(int32) //
+	*p = 2
+
+	fmt.Println(*p)
+
+	var x int32 = 89
+	p = &x
+	*p += 1
+
+	fmt.Println(*p)
+	fmt.Println(x)
+
+	var slice = []int32{7, 8, 9}
+	var sliceCopy = slice
+	sliceCopy[1] = 66
+	fmt.Println(slice)
+}
+```
