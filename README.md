@@ -309,3 +309,49 @@ for i := 0; i < 10; i++ {
 
 ### Basic math ops
 ![Basic math operators](./images/basic_math_ops.png)
+
+## Strings
+UTF-8 helps to have variable length encoding.
+![UTF-8 conversion](./images/utf-8-conversion.png)
+![UTF-8 resume word)(./images/utf-8-resume-word.png)
+
+### Runes
+```go
+var myRune = 'a'
+fmt.Println(myRune)
+```
+
+### String concatenation
+We can concatenate using the + operator, but tends to be inneficient.
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var myString = "résumé"
+	var indexed = myString[0]
+	fmt.Printf("%v, %T", indexed, indexed) // 114, uint8
+
+	// index +
+	for i, v := range myString {
+		fmt.Println(i, v)
+	}
+
+	var myRune = 'a'
+	fmt.Println(myRune) // 97
+
+	var strBuilder strings.Builder
+	strings := []string{"Leonardo", "Gutierrez", "Ramirez"}
+
+	for i := range strings {
+		strBuilder.WriteString(strings[i])
+	}
+
+	fmt.Printf("The string is: '%s'\n", strBuilder.String())
+}
+```
