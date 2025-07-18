@@ -32,7 +32,7 @@ go mod init <project-name>
 ```
 
 ### A Hello World
-
+```bash
 $ tree
 .
 ├── cmd
@@ -42,6 +42,8 @@ $ tree
 
 2 directories, 2 files
 $ cat cmd/tutorial1/main.go
+```
+
 ```go
 package main
 
@@ -403,4 +405,3 @@ ge := gasEngine2{mpg: 4, gallons: 9, owner: owner{name: "Leo"}}
 
 ```
 
-```
