@@ -8,6 +8,10 @@ type gasEngine struct {
 	ownerInfo owner
 }
 
+func (e gasEngine) milesLeft() uint8 {
+	return e.gallons * e.mpg
+}
+
 type owner struct {
 	name string
 }
@@ -16,6 +20,7 @@ type gasEngine2 struct {
 	mpg     uint8
 	gallons uint8
 	owner
+	int
 }
 
 func main() {
@@ -30,7 +35,19 @@ func main() {
 
 	myEngine3.gallons = 78
 
-	ge := gasEngine2{mpg: 4, gallons: 9, owner: owner{name: "Leo"}}
+	ge := gasEngine2{4, 9, owner{"Leo"}, 3}
 	fmt.Printf("%+v\n", ge)
 	fmt.Println(ge.name)
+	fmt.Println(ge.int)
+
+	owner := struct {
+		name string
+		age  int
+	}{name: "Leonardo", age: 34}
+
+	fmt.Println(struct{ name string }{name: "Leonardo"}.name)
+
+	fmt.Println(owner)
+
+	fmt.Println(myEngine3.milesLeft())
 }

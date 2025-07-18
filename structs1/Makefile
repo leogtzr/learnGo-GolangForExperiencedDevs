@@ -8,7 +8,7 @@ GOMOD=$(GOCMD) mod
 GOFMT=$(GOCMD) fmt
 
 # Binary names and paths
-BINARY_NAME=maps1
+BINARY_NAME=structs1
 BINARY_PATH=./bin/$(BINARY_NAME)
 MAIN_PATH=./cmd
 
