@@ -748,3 +748,158 @@ func log() {
 	m.RUnlock()
 }
 ```
+
+About performance:
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var wg = sync.WaitGroup{}
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+
+func main() {
+	t0 := time.Now()
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go count()
+	}
+	wg.Wait() // let's wait for the counter to be 0 ...
+	fmt.Printf("\nTotal execution time: %v", time.Since(t0))
+}
+
+func count() {
+	var res int
+	for i := 0; i < 100_000_000; i++ {
+		res++
+	}
+	wg.Done()
+}
+```
+
+Output:
+```
+./bin/goroutines1
+
+Total execution time: 5.039931375s%
+```
+
+# Channels
+- Channels allows the goroutines to pass around information.
+- They hold data.
+- They are thread safe.
+- Listen for data when information is added or removed.
+-- We can block code execution until one of these events happens.
+
+## Channel syntax
+`<-` to add a value to the channel.
+### A simple deadlock
+```go
+package main
+
+import "fmt"
+
+func main() {
+	// Unbuffered channel
+	var c = make(chan int)
+	c <- 1
+	var i = <-c
+	fmt.Println(i)
+}
+```
+The problem with this code is that, when we are using unbuffered channels, the code will block until something else reads from it.
+So, basically we need channels+goroutines.
+
+Fixing the issue:
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var c = make(chan int)
+	go process(c)
+	// var i = <-c
+	fmt.Println(<-c)
+}
+
+func process(c chan int) {
+	c <- 123
+}
+```
+
+Improving the code:
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var c = make(chan int)
+	go process(c)
+	for v := range c {
+		fmt.Println(v)
+	}
+}
+
+func process(c chan int) {
+	defer close(c)
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+}
+```
+
+## Buffered channels
+- We can store multiple values in the channel at the same time.
+Example:
+```go
+import "fmt"
+
+func main() {
+	var c = make(chan int)
+	go process(c)
+	for v := range c {
+		fmt.Println(v)
+	}
+}
+
+func process(c chan int) {
+	// c <- 123
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+	close(c)
+}
+```
+VS.
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	var c = make(chan int, 5)
+	go process(c)
+	for v := range c {
+		fmt.Println(v)
+		time.Sleep(time.Second * 1)
+	}
+}
+
+func process(c chan int) {
+	defer close(c)
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+	fmt.Println("Exiting process")
+}
+
+``` 

@@ -37,3 +37,5 @@ slices1/bin/slices1
 maps1/bin/maps1
 strings1/bin/strings1
 goroutines/bin/goroutines1
+channels/bin/channels1
+chicken_price/bin/chickenprice1
