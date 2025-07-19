@@ -965,3 +965,49 @@ func sumSlice[T int | float32 | float64](slice []T) T {
 }
 ``` 
 ![Required generic types when calling function](./images/generic_types.png)
+
+### Another example with generic types in structs:
+```go
+package main
+
+import "fmt"
+
+type gasEngine struct {
+	gallons float32
+	mpg     float32
+}
+
+type electricEngine struct {
+	kwh   float32
+	mpkwh float32
+}
+
+type car[T gasEngine | electricEngine] struct {
+	carMake  string
+	carModel string
+	engine   T
+}
+
+func main() {
+	gasCar := car[gasEngine]{
+		carMake:  "Honda",
+		carModel: "Civic",
+		engine: gasEngine{
+			gallons: 12.4,
+			mpg:     40,
+		},
+	}
+
+	var electricCar = car[electricEngine]{
+		carMake:  "Tesla",
+		carModel: "Model S",
+		engine: electricEngine{
+			kwh:   57.5,
+			mpkwh: 4.17,
+		},
+	}
+
+	fmt.Println(gasCar)
+	fmt.Println(electricCar)
+}
+```

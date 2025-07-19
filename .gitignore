@@ -39,3 +39,4 @@ strings1/bin/strings1
 goroutines/bin/goroutines1
 channels/bin/channels1
 chicken_price/bin/chickenprice1
+generics_engines/bin/genericsE
