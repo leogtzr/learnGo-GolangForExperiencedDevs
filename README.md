@@ -593,3 +593,158 @@ func main() {
 	fmt.Println(slice)
 }
 ```
+# Goroutines
+- Concurrency != parallel execution
+-- Concurrency means: multiple tasks in progress at the same time.
+-- Parallel execution: instead of having a single CPU core working on different tasks, we can have two cores, meaning that the execution is simultaneosly.
+
+We are going to make the following program to run concurrently:
+```go
+package main
+
+import (
+	"fmt"
+	"math/rand/v2"
+	"time"
+)
+
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+
+func dbCall(i int) {
+	// Simulate DB call delay
+	var delay float32 = rand.Float32() * 2000
+	time.Sleep(time.Duration(delay) * time.Millisecond)
+	fmt.Println("The result from the database is:", dbData[i])
+}
+
+func main() {
+	t0 := time.Now()
+	for i := 0; i < len(dbData); i++ {
+		dbCall(i)
+	}
+	fmt.Printf("\nTotal execution time: %v", time.Since(t0))
+}
+```
+
+The main thread needs to wait for the goroutines to finish (once we change it to `go dbCall(i)`).
+Improvement:
+```go
+package main
+
+import (
+	"fmt"
+	"math/rand/v2"
+	"sync"
+	"time"
+)
+
+var wg = sync.WaitGroup{}
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+
+func main() {
+	t0 := time.Now()
+	for i := 0; i < len(dbData); i++ {
+		wg.Add(1)
+		go dbCall(i)
+	}
+	wg.Wait() // let's wait for the counter to be 0 ...
+	fmt.Printf("\nTotal execution time: %v", time.Since(t0))
+}
+
+func dbCall(i int) {
+	// Simulate DB call delay
+	var delay float32 = rand.Float32() * 2000
+	time.Sleep(time.Duration(delay) * time.Millisecond)
+	fmt.Println("The result from the database is:", dbData[i])
+	wg.Done()
+}
+```
+
+## Mutexes
+To control writing to our slice in a way that is safe in a concurrent program.:$
+
+Example:
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var wg = sync.WaitGroup{}
+var m = sync.Mutex{}
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+var results []string = []string{}
+
+func main() {
+	t0 := time.Now()
+	for i := 0; i < len(dbData); i++ {
+		wg.Add(1)
+		go dbCall(i)
+	}
+	wg.Wait() // let's wait for the counter to be 0 ...
+	fmt.Printf("\nTotal execution time: %v", time.Since(t0))
+	fmt.Printf("\nThe results are: %v", results)
+}
+
+func dbCall(i int) {
+	// Simulate DB call delay
+	var delay float32 = 2000
+	time.Sleep(time.Duration(delay) * time.Millisecond)
+	fmt.Println("The result from the database is:", dbData[i])
+	m.Lock()
+	results = append(results, dbData[i])
+	m.Unlock()
+	wg.Done()
+}
+```
+
+The following pattern, allows multiple goroutines to read from a slice at the same time and only blocking when writer might potentially be happening.
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var wg = sync.WaitGroup{}
+var m = sync.RWMutex{}
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+var results []string = []string{}
+
+func main() {
+	t0 := time.Now()
+	for i := 0; i < len(dbData); i++ {
+		wg.Add(1)
+		go dbCall(i)
+	}
+	wg.Wait() // let's wait for the counter to be 0 ...
+	fmt.Printf("\nTotal execution time: %v", time.Since(t0))
+	fmt.Printf("\nThe results are: %v", results)
+}
+
+func dbCall(i int) {
+	// Simulate DB call delay
+	var delay float32 = 2000
+	time.Sleep(time.Duration(delay) * time.Millisecond)
+	save(dbData[i])
+	log()
+	wg.Done()
+}
+
+func save(result string) {
+	m.Lock()
+	results = append(results, result)
+	m.Unlock()
+}
+
+func log() {
+	m.RLock()
+	fmt.Printf("\nThe current results are: %v", results)
+	m.RUnlock()
+}
+```

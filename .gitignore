@@ -36,3 +36,4 @@ arrays_explain/bin
 slices1/bin/slices1
 maps1/bin/maps1
 strings1/bin/strings1
+goroutines/bin/goroutines1
